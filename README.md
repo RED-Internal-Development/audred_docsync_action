@@ -6,24 +6,24 @@ This GitHub Action copies a file from the current repository to a location in an
 
     on: push
 
-    jobs:
-      copy-file:
-        runs-on: ubuntu-latest
-        steps:
-        - name: Checkout
-          uses: actions/checkout@v2
+jobs:
+  copy-file:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
 
-        - name: Pushes test file
-          uses: dmnemec/copy_file_to_another_repo_action@main
-          env:
-            API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-          with:
-            source_file: 'test2.md'
-            destination_repo: 'dmnemec/release-test'
-            destination_folder: 'test-dir'
-            user_email: 'example@email.com'
-            user_name: 'dmnemec'
-            commit_message: 'A custom message for the commit'
+    - name: Pushes test file
+      uses: RED-Internal-Development/audred_docsync_action@main
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.API_DOC_KEY }}
+      with:
+        source_file: 'docs/'
+        destination_repo: 'RED-Internal-Development/audi-red-documentation'
+        destination_folder: 'docs/Feature Apps/Demo'
+        destination_branch: 'docSync'
+        user_email: 'email of technical user'
+        user_name: 'user name of technical user'
 
 # Variables
 
