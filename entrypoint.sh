@@ -24,7 +24,7 @@ fi
 
 git config --global --add safe.directory /github/workspace
 
-if [ ! -z `git branch --list $OUTPUT_BRANCH` ]
+if [ -z `git branch --list $OUTPUT_BRANCH` ]
 then
   echo "Creating new branch: ${INPUT_DESTINATION_BRANCH}"
   git checkout -b "$INPUT_DESTINATION_BRANCH"
