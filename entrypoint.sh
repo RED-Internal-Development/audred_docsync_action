@@ -14,7 +14,7 @@ then
   INPUT_GIT_SERVER="github.com"
 fi
 
-if [ -z "$INPUT_DESTINATION_BRANCH" ]
+if [ ! -z "$INPUT_DESTINATION_BRANCH" ]
 then
   echo "Input branch has been set as destination"
   OUTPUT_BRANCH="$INPUT_DESTINATION_BRANCH"
