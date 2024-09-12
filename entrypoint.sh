@@ -22,6 +22,8 @@ else
   echo "Please add a destination branch to action config"
 fi
 
+git config --global --add safe.directory /github/workspace
+
 if [ ! -z `git branch --list $OUTPUT_BRANCH` ]
 then
   echo "Creating new branch: ${INPUT_DESTINATION_BRANCH}"
