@@ -17,7 +17,6 @@ fi
 if [ -z "$INPUT_DESTINATION_BRANCH" ]
 then
    echo "Please input a destination branch"
-   exit
 else
   OUTPUT_BRANCH="$INPUT_DESTINATION_BRANCH"
   echo "Input branch has been set as destination"
