@@ -34,12 +34,11 @@ then
   git clone --single-branch --branch main "https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git" "$CLONE_DIR"
   git checkout -b "$INPUT_DESTINATION_BRANCH"
   OUTPUT_BRANCH="$INPUT_DESTINATION_BRANCH"
+else
+  echo "Cloning destination git repository"
+  git clone --single-branch --branch $OUTPUT_BRANCH "https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git" "$CLONE_DIR"
 fi
 
-echo "Cloning destination git repository"
-git config --global user.email "$INPUT_USER_EMAIL"
-git config --global user.name "$INPUT_USER_NAME"
-git clone --single-branch --branch $OUTPUT_BRANCH "https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git" "$CLONE_DIR"
 
 if [ ! -z "$INPUT_RENAME" ]
 then
