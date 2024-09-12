@@ -16,14 +16,18 @@ fi
 
 if [ -z "$INPUT_DESTINATION_BRANCH" ]
 then
-   echo "Please input a destination branch"
-else
   OUTPUT_BRANCH="$INPUT_DESTINATION_BRANCH"
   echo "Input branch has been set as destination"
-
+else
+  echo "Please add a destination branch to action config"
 fi
 
-OUTPUT_BRANCH="$INPUT_DESTINATION_BRANCH"
+if [ ! -z `git branch --list $OUTPUT_BRANCH` ]
+then
+  echo "Creating new branch: ${INPUT_DESTINATION_BRANCH}"
+  git checkout -b "$INPUT_DESTINATION_BRANCH"
+  OUTPUT_BRANCH="$INPUT_DESTINATION_BRANCH"
+fi
 
 CLONE_DIR=$(mktemp -d)
 
@@ -52,12 +56,7 @@ fi
 
 cd "$CLONE_DIR"
 
-if [ ! -z `git branch --list $OUTPUT_BRANCH` ]
-then
-  echo "Creating new branch: ${INPUT_DESTINATION_BRANCH}"
-  git checkout -b "$INPUT_DESTINATION_BRANCH"
-  OUTPUT_BRANCH="$INPUT_DESTINATION_BRANCH"
-fi
+
 
 if [ -z "$INPUT_COMMIT_MESSAGE" ]
 then
