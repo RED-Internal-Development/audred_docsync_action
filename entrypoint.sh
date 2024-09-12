@@ -16,8 +16,14 @@ fi
 
 if [ -z "$INPUT_DESTINATION_BRANCH" ]
 then
-  INPUT_DESTINATION_BRANCH=main
+   echo "Please input a destination branch"
+   exit
+else
+  OUTPUT_BRANCH="$INPUT_DESTINATION_BRANCH"
+  echo "Input branch has been set as destination"
+
 fi
+
 OUTPUT_BRANCH="$INPUT_DESTINATION_BRANCH"
 
 CLONE_DIR=$(mktemp -d)
@@ -47,11 +53,11 @@ fi
 
 cd "$CLONE_DIR"
 
-if [ ! -z "$INPUT_DESTINATION_BRANCH_CREATE" ]
+if [ ! -z `git branch --list $OUTPUT_BRANCH` ]
 then
-  echo "Creating new branch: ${INPUT_DESTINATION_BRANCH_CREATE}"
-  git checkout -b "$INPUT_DESTINATION_BRANCH_CREATE"
-  OUTPUT_BRANCH="$INPUT_DESTINATION_BRANCH_CREATE"
+  echo "Creating new branch: ${INPUT_DESTINATION_BRANCH}"
+  git checkout -b "$INPUT_DESTINATION_BRANCH"
+  OUTPUT_BRANCH="$INPUT_DESTINATION_BRANCH"
 fi
 
 if [ -z "$INPUT_COMMIT_MESSAGE" ]
