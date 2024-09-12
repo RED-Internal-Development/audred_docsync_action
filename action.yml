@@ -16,6 +16,9 @@ inputs:
   user_name:
     description: 'GitHub username for the commit'
     required: true
+  user_actor:
+    description: 'GitHub username that trigged the pipeline'
+    required: true
   destination_branch:
     description: 'branch to push file to, defaults to main'
     required: false
@@ -43,6 +46,7 @@ runs:
     - ${{ inputs.destination-repo }}
     - ${{ inputs.destination-folder }}
     - ${{ inputs.user-email }}
+    - ${{ inputs.user-actor }}
     - ${{ inputs.destination-branch }}
     - ${{ inputs.destination-branch-create }}
     - ${{ inputs.commit-message }}
