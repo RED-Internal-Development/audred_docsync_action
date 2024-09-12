@@ -16,8 +16,8 @@ fi
 
 if [ -z "$INPUT_DESTINATION_BRANCH" ]
 then
-  OUTPUT_BRANCH="$INPUT_DESTINATION_BRANCH"
   echo "Input branch has been set as destination"
+  OUTPUT_BRANCH="$INPUT_DESTINATION_BRANCH"
 else
   echo "Please add a destination branch to action config"
 fi
