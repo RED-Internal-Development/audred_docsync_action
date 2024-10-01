@@ -72,6 +72,13 @@ git add .
 if git status | grep -q "Changes to be committed"
 then
   git commit --message "$INPUT_COMMIT_MESSAGE"
+  if git ls-remote --exit-code --heads origin "$OUTPUT_BRANCH"
+    then
+      echo "Pulling latest from remote"
+      git pull --rebase origin "$OUTPUT_BRANCH"
+    else
+      echo "No pull required as remote branch does not yet exist"
+    fi
   echo "Pushing git commit"
   git push -u origin HEAD:"$OUTPUT_BRANCH"
 else
