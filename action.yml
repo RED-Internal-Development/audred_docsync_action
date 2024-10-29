@@ -62,6 +62,17 @@ runs:
         INPUT_USER_ACTOR: ${{ inputs.user_actor }}
         INPUT_COMMIT_MESSAGE: ${{ inputs.commit_message }}
         INPUT_RENAME: ${{ inputs.rename }}
+
+    - name: Run SCANOSS Code Scan
+      id: scanoss-code-scan-step
+      uses: scanoss/gha-code-scan@v0.2.0
+      with:
+        api.key: ${{ secrets.OPENSOURCE }}
+        api.url: https://api.scanoss.com/scan/direct
+        dependencies.enabled: true
+        policies.halt_on_failure: false
+        policies: copyleft, undeclared
+
 branding:
   icon: 'git-commit'
   color: 'green'
