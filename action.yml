@@ -41,6 +41,12 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: Set GitHub Path
+      run: echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
+      shell: bash
+      env:
+        GITHUB_ACTION_PATH: ${{ github.action_path }}
+
     - name: Run entrypoint.sh
       run: entrypoint.sh
       shell: bash
