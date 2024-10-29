@@ -39,20 +39,24 @@ inputs:
     required: false
     default: github.com
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.source-file }}
-    - ${{ inputs.destination-repo }}
-    - ${{ inputs.destination-folder }}
-    - ${{ inputs.user-email }}
-    - ${{ inputs.user-actor }}
-    - ${{ inputs.destination-branch }}
-    - ${{ inputs.destination-branch-create }}
-    - ${{ inputs.commit-message }}
-    - ${{ inputs.git-server }}
-    - ${{ inputs.rename }}
-    - ${{ inputs.use-rsync }}
+  using: 'composite'
+  steps:
+    - name: Run entrypoint.sh
+      run: entrypoint.sh
+      shell: bash
+      env:
+        INPUT_SOURCE_FILE: ${{ inputs.source_file }}
+        INPUT_GIT_SERVER: ${{ inputs.git_server }}
+        INPUT_DESTINATION_BRANCH: ${{ inputs.destination_branch }}
+        INPUT_USER_EMAIL: ${{ inputs.user_email }}
+        INPUT_USER_NAME: ${{ inputs.user_name }}
+        INPUT_GIT_SERVER: ${{ inputs.git_server }}
+        INPUT_DESTINATION_REPO: ${{ inputs.destination_repo }}
+        INPUT_DESTINATION_FOLDER: ${{ inputs.destination_folder }}
+        INPUT_USE_RSYNC: ${{ inputs.use_rsync }}
+        INPUT_USER_ACTOR: ${{ inputs.user_actor }}
+        INPUT_COMMIT_MESSAGE: ${{ inputs.commit_message }}
+        INPUT_RENAME: ${{ inputs.rename }}
 branding:
   icon: 'git-commit'
   color: 'green'
