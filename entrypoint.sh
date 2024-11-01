@@ -30,12 +30,12 @@ echo "TEST"
 git remote -v
 echo "TEST2"
 
-git remote set-url origin "https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git"
+git remote add origin "https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git"
 git remote -v
 
 CLONE_DIR=$(mktemp -d)
 
-if [ -z `git ls-remote --heads origin refs/heads/$OUTPUT_BRANCH` ]
+if git ls-remote --exit-code --heads origin "$OUTPUT_BRANCH"
 then
   echo "Creating new branch: ${INPUT_DESTINATION_BRANCH}"
   git clone --single-branch --branch main "https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git" "$CLONE_DIR"
