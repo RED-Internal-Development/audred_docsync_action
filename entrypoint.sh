@@ -27,8 +27,10 @@ git config --global user.email "$INPUT_USER_EMAIL"
 git config --global user.name "$INPUT_USER_NAME"
 
 CLONE_DIR=$(mktemp -d)
+TEST="git ls-remote https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git refs/heads/$OUTPUT_BRANCH"
+echo "$TEST"
 
-if [ -z `git branch --list $OUTPUT_BRANCH` ]
+if [ -z `git ls-remote https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git refs/heads/$OUTPUT_BRANCH` ]
 then
   echo "Creating new branch: ${INPUT_DESTINATION_BRANCH}"
   git clone --single-branch --branch main "https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git" "$CLONE_DIR"
