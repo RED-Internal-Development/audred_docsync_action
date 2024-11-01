@@ -29,6 +29,7 @@ git config --global user.name "$INPUT_USER_NAME"
 CLONE_DIR=$(mktemp -d)
 
 git clone --single-branch --branch main "https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git" "$CLONE_DIR"
+cd "$CLONE_DIR"
 
 git ls-remote --heads
 
@@ -41,6 +42,8 @@ else
   git checkout -b "$INPUT_DESTINATION_BRANCH"
   OUTPUT_BRANCH="$INPUT_DESTINATION_BRANCH"
 fi
+
+cd "../"
 
 
 if [ ! -z "$INPUT_RENAME" ]
