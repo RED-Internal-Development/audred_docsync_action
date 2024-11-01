@@ -26,9 +26,12 @@ git config --global --add safe.directory /github/workspace
 git config --global user.email "$INPUT_USER_EMAIL"
 git config --global user.name "$INPUT_USER_NAME"
 
+echo "TEST"
+git ls-remote -h https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git refs/heads/$OUTPUT_BRANCH
+
 CLONE_DIR=$(mktemp -d)
 
-if git ls-remote -h "https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git"
+if [ -z `git ls-remote -h https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git refs/heads/$OUTPUT_BRANCH` ]
 then
   echo "Creating new branch: ${INPUT_DESTINATION_BRANCH}"
   git clone --single-branch --branch main "https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git" "$CLONE_DIR"
