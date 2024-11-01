@@ -26,17 +26,16 @@ git config --global --add safe.directory /github/workspace
 git config --global user.email "$INPUT_USER_EMAIL"
 git config --global user.name "$INPUT_USER_NAME"
 
-git ls-remote --heads "https://$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git"
-
 CLONE_DIR=$(mktemp -d)
 
-if git ls-remote --exit-code --heads "https://$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git" "refs/heads/$OUTPUT_BRANCH"
+git clone --single-branch --branch main "https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git" "$CLONE_DIR"
+
+if git ls-remote --exit-code --heads origin "$OUTPUT_BRANCH"
 then
-  echo "Cloning destination git repository"
-  git clone --single-branch --branch $OUTPUT_BRANCH "https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git" "$CLONE_DIR"
+  echo "Branch found - checkout output branch"
+  git checkout "$OUTPUT_BRANCH"
 else
-  echo "Creating new branch: ${INPUT_DESTINATION_BRANCH}"
-  git clone --single-branch --branch main "https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git" "$CLONE_DIR"
+  echo "Not Branch found - creating new branch: ${INPUT_DESTINATION_BRANCH}"
   git checkout -b "$INPUT_DESTINATION_BRANCH"
   OUTPUT_BRANCH="$INPUT_DESTINATION_BRANCH"
 fi
