@@ -30,8 +30,9 @@ CLONE_DIR=$(mktemp -d)
 
 git clone --single-branch --branch main "https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git" "$CLONE_DIR"
 cd "$CLONE_DIR"
+git fetch origin
 
-if git ls-remote --exit-code --heads origin refs/heads/"$OUTPUT_BRANCH"
+if [ -z `git branch --list $OUTPUT_BRANCH` ]
 then
   echo "Branch found - checkout output branch"
   git checkout -b "$OUTPUT_BRANCH" origin/"$OUTPUT_BRANCH"
