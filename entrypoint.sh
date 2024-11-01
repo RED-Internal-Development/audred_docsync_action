@@ -27,13 +27,11 @@ git config --global user.email "$INPUT_USER_EMAIL"
 git config --global user.name "$INPUT_USER_NAME"
 
 echo "TEST"
+git remote -v
+echo "TEST2"
+
 git remote set-url origin "https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git"
 git remote -v
-
-echo "NEXT STEPS"
-git ls-remote --exit-code --heads origin "refs/heads/$OUTPUT_BRANCH"
-
-echo "REACHED THIS STEP"
 
 CLONE_DIR=$(mktemp -d)
 
