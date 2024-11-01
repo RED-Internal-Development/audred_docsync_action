@@ -53,7 +53,6 @@ runs:
     - ${{ inputs.git-server }}
     - ${{ inputs.rename }}
     - ${{ inputs.use-rsync }}
-
 branding:
   icon: 'git-commit'
   color: 'green'
