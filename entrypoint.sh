@@ -27,7 +27,7 @@ git config --global user.email "$INPUT_USER_EMAIL"
 git config --global user.name "$INPUT_USER_NAME"
 
 echo "TEST"
-git ls-remote -h https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git refs/heads/$OUTPUT_BRANCH
+git ls-remote https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git --heads --sort origin refs/heads/$OUTPUT_BRANCH
 
 CLONE_DIR=$(mktemp -d)
 
