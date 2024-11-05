@@ -27,29 +27,16 @@ git config --global user.email "$INPUT_USER_EMAIL"
 git config --global user.name "$INPUT_USER_NAME"
 
 CLONE_DIR=$(mktemp -d)
+REPO_URL="https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git"
 
-BRANCH_EXISTS_TWO=$(git ls-remote --heads "https://$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git" "$INPUT_DESTINATION_BRANCH")
-
-if [ -n "$BRANCH_EXISTS" ]; then
-  echo "BRANCH EXISTS"
-else
-  echo "BRANCH NOT EXISTS"
-fi
-
-if [ -n "$BRANCH_EXISTS_TWO" ]; then
-  echo "BRANCH EXISTS TWO"
-else
-  echo "BRANCH NOT EXISTS TWO"
-fi
-
-git clone --single-branch --branch main "https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git" "$CLONE_DIR"
+git clone --single-branch --branch main  "$CLONE_DIR"
 cd "$CLONE_DIR"
 git fetch origin
 
 if [ -z `git branch --list $OUTPUT_BRANCH` ]
 then
   echo "Branch found - checkout output branch"
-  git checkout -b "$OUTPUT_BRANCH" origin/"$OUTPUT_BRANCH"
+  git checkout "$OUTPUT_BRANCH"
 else
   echo "Not Branch found - creating new branch: ${INPUT_DESTINATION_BRANCH}"
   git checkout -b "$INPUT_DESTINATION_BRANCH"
