@@ -27,29 +27,19 @@ git config --global user.email "$INPUT_USER_EMAIL"
 git config --global user.name "$INPUT_USER_NAME"
 
 CLONE_DIR=$(mktemp -d)
-REPO_URL="https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git"
 
-git remote set-url origin "$REPO_URL"
+echo "$INPUT_DESTINATION_BRANCH_EXISTS"
 
-TEST=$(git ls-remote --heads "$REPO_URL")
-echo "CHECKING REMOTE"
-echo "$TEST"
-
-git clone --single-branch --branch main "https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git" "$CLONE_DIR"
-cd "$CLONE_DIR"
-git fetch origin
-
-if [ -z `git branch --list $OUTPUT_BRANCH` ]
+if [ $INPUT_DESTINATION_BRANCH_EXISTS -eq "false" ]
 then
-  echo "Branch found - checkout output branch"
-  git checkout "$OUTPUT_BRANCH"
-else
-  echo "Not Branch found - creating new branch: ${INPUT_DESTINATION_BRANCH}"
+  echo "Creating new branch: ${INPUT_DESTINATION_BRANCH}"
+  git clone --single-branch --branch main "https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git" "$CLONE_DIR"
   git checkout -b "$INPUT_DESTINATION_BRANCH"
   OUTPUT_BRANCH="$INPUT_DESTINATION_BRANCH"
+else
+  echo "Cloning destination git repository"
+  git clone --single-branch --branch $OUTPUT_BRANCH "https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git" "$CLONE_DIR"
 fi
-
-cd "../"
 
 
 if [ ! -z "$INPUT_RENAME" ]
@@ -84,6 +74,13 @@ git add .
 if git status | grep -q "Changes to be committed"
 then
   git commit --message "$INPUT_COMMIT_MESSAGE"
+  if git ls-remote --exit-code --heads origin "$OUTPUT_BRANCH"
+    then
+      echo "Pulling latest from remote"
+      git pull --rebase origin "$OUTPUT_BRANCH"
+    else
+      echo "No pull required as remote branch does not yet exist"
+    fi
   echo "Pushing git commit"
   git push -u origin HEAD:"$OUTPUT_BRANCH"
 else
