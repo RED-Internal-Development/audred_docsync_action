@@ -29,7 +29,13 @@ git config --global user.name "$INPUT_USER_NAME"
 CLONE_DIR=$(mktemp -d)
 REPO_URL="https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git"
 
-git clone --single-branch --branch main  "$CLONE_DIR"
+git remote set-url origin "$REPO_URL"
+
+TEST=$(git ls-remote --heads "$REPO_URL")
+echo "CHECKING REMOTE"
+echo "$TEST"
+
+git clone --single-branch --branch main "https://x-access-token:$API_TOKEN_GITHUB@$INPUT_GIT_SERVER/$INPUT_DESTINATION_REPO.git" "$CLONE_DIR"
 cd "$CLONE_DIR"
 git fetch origin
 
