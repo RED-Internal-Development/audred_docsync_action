@@ -71,8 +71,8 @@ then
 fi
 
 # Remove deleted files from the destination directory
-# echo "Removing deleted files"
-# git ls-files --deleted -z | xargs -0 git rm --cached
+echo "Removing deleted files"
+git ls-files --deleted -z | xargs -0 git rm --cached
 
 echo "Adding git commit"
 git add .
