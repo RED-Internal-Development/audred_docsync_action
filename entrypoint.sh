@@ -72,7 +72,7 @@ fi
 # git ls-files --deleted -z | xargs -0 git rm --cached
 
 echo "Adding git commit"
-git add -A
+git add --all
 if git status | grep -q "Changes to be committed"
 then
   git commit --message "$INPUT_COMMIT_MESSAGE"
