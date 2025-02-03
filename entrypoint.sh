@@ -50,8 +50,8 @@ else
   DEST_COPY="$CLONE_DIR/$INPUT_DESTINATION_FOLDER"
 fi
 
-echo "Clearing the destination directory: $DEST_COPY"
-rm -rf "$DEST_COPY/*"
+echo "Wiping destination folder"
+rm -rf "$CLONE_DIR/$INPUT_DESTINATION_FOLDER/*"
 
 echo "Copying contents to git repo"
 mkdir -p $CLONE_DIR/$INPUT_DESTINATION_FOLDER
@@ -75,7 +75,7 @@ fi
 # git ls-files --deleted -z | xargs -0 git rm --cached
 
 echo "Adding git commit"
-git add --all
+git add .
 if git status | grep -q "Changes to be committed"
 then
   git commit --message "$INPUT_COMMIT_MESSAGE"
