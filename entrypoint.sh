@@ -50,19 +50,20 @@ else
   DEST_COPY="$CLONE_DIR/$INPUT_DESTINATION_FOLDER"
 fi
 
-echo "starting CLONE_DIR: $CLONE_DIR"
-tree "$CLONE_DIR"
+echo "DEST_COPY: $DEST_COPY"
+tree "$DEST_COPY"
 
 echo "Wiping destination folder"
-rm -rf "$CLONE_DIR/$INPUT_DESTINATION_FOLDER/*"
+rm -rf "$DEST_COPY/*"
 
-echo "next CLONE_DIR: $CLONE_DIR"
-tree "$CLONE_DIR"
+echo "next DEST_COPY: $DEST_COPY"
+tree "$DEST_COPY"
+
+echo "$INPUT_SOURCE_FILE TEST"
+tree "$INPUT_SOURCE_FILE"
 
 echo "Copying contents to git repo"
 mkdir -p $CLONE_DIR/$INPUT_DESTINATION_FOLDER
-echo "next next CLONE_DIR: $CLONE_DIR"
-tree "$CLONE_DIR"
 if [ -z "$INPUT_USE_RSYNC" ]
 then
   cp -R "$INPUT_SOURCE_FILE" "$DEST_COPY"
