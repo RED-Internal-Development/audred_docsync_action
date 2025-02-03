@@ -50,11 +50,19 @@ else
   DEST_COPY="$CLONE_DIR/$INPUT_DESTINATION_FOLDER"
 fi
 
+echo "starting CLONE_DIR: $CLONE_DIR"
+tree "$CLONE_DIR"
+
 echo "Wiping destination folder"
 rm -rf "$CLONE_DIR/$INPUT_DESTINATION_FOLDER/*"
 
+echo "next CLONE_DIR: $CLONE_DIR"
+tree "$CLONE_DIR"
+
 echo "Copying contents to git repo"
 mkdir -p $CLONE_DIR/$INPUT_DESTINATION_FOLDER
+echo "next next CLONE_DIR: $CLONE_DIR"
+tree "$CLONE_DIR"
 if [ -z "$INPUT_USE_RSYNC" ]
 then
   cp -R "$INPUT_SOURCE_FILE" "$DEST_COPY"
@@ -62,6 +70,7 @@ else
   echo "rsync mode detected"
   rsync -avrh "$INPUT_SOURCE_FILE" "$DEST_COPY"
 fi
+echo "next next next CLONE_DIR: $CLONE_DIR"
 
 cd "$CLONE_DIR"
 
