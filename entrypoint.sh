@@ -70,12 +70,8 @@ then
   INPUT_COMMIT_MESSAGE="Update from $INPUT_USER_ACTOR from this repository https://$INPUT_GIT_SERVER/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}"
 fi
 
-# Remove deleted files from the destination directory
-echo "Removing deleted files"
-git ls-files --deleted -z | xargs -0 git rm --cached
-
 echo "Adding git commit"
-git add .
+git add -A
 if git status | grep -q "Changes to be committed"
 then
   git commit --message "$INPUT_COMMIT_MESSAGE"
