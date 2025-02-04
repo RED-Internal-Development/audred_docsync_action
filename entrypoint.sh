@@ -50,9 +50,6 @@ else
   DEST_COPY="$CLONE_DIR/$INPUT_DESTINATION_FOLDER"
 fi
 
-echo "Wiping destination folder"
-rm -rf "$DEST_COPY/fa-all-promotions/*"
-
 echo "Copying contents to git repo"
 mkdir -p $CLONE_DIR/$INPUT_DESTINATION_FOLDER
 if [ -z "$INPUT_USE_RSYNC" ]
@@ -62,7 +59,6 @@ else
   echo "rsync mode detected"
   rsync -avrh "$INPUT_SOURCE_FILE" "$DEST_COPY"
 fi
-echo "next next next CLONE_DIR: $CLONE_DIR"
 
 cd "$CLONE_DIR"
 
