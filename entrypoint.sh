@@ -50,17 +50,8 @@ else
   DEST_COPY="$CLONE_DIR/$INPUT_DESTINATION_FOLDER"
 fi
 
-echo "DEST_COPY: $DEST_COPY"
-tree "$DEST_COPY"
-
 echo "Wiping destination folder"
-rm -rf "$DEST_COPY/*"
-
-echo "next DEST_COPY: $DEST_COPY"
-tree "$DEST_COPY"
-
-echo "$INPUT_SOURCE_FILE TEST"
-tree "$INPUT_SOURCE_FILE"
+rm -rf "$DEST_COPY/fa-all-promotions/*"
 
 echo "Copying contents to git repo"
 mkdir -p $CLONE_DIR/$INPUT_DESTINATION_FOLDER
