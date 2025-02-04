@@ -57,12 +57,10 @@ then
   cp -R "$INPUT_SOURCE_FILE" "$DEST_COPY"
 else
   echo "rsync mode detected"
-  rsync -avrh "$INPUT_SOURCE_FILE" "$DEST_COPY"
+  rsync -avrh --delete "$INPUT_SOURCE_FILE" "$DEST_COPY"
 fi
 
 cd "$CLONE_DIR"
-
-
 
 if [ -z "$INPUT_COMMIT_MESSAGE" ]
 then
@@ -70,7 +68,7 @@ then
 fi
 
 echo "Adding git commit"
-git add .
+git add -A
 if git status | grep -q "Changes to be committed"
 then
   git commit --message "$INPUT_COMMIT_MESSAGE"
